@@ -1,0 +1,326 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+// Local SVG icon component.
+// This avoids runtime failures from CDN subpath imports such as lucide-react/icons/linkedin.
+const Icon = ({ name, className = "h-5 w-5" }) => {
+  const commonProps = {
+    className,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": "true",
+  };
+
+  const icons = {
+    arrowRight: <path d="M5 12h14M13 5l7 7-7 7" />,
+    barChart: <path d="M3 3v18h18M7 16V9M12 16V5M17 16v-3" />,
+    briefcase: <path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Zm0 0l8 5a2 2 0 0 0 2 0l8-5" />,
+    check: <path d="M20 6 9 17l-5-5" />,
+    database: <><ellipse cx="12" cy="5" rx="8" ry="3" /><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5" /><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" /></>,
+    globe: <><circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 0 1 0 20" /><path d="M12 2a15.3 15.3 0 0 0 0 20" /></>,
+    linkedin: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></>,
+    mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>,
+    mapPin: <><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
+    phone: <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6.4 6.4l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z" />,
+    shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10ZM12 8v4M12 16h.01" />,
+    sparkles: <><path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z" /><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z" /></>,
+    target: <><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></>,
+    users: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.9" /><path d="M16 3.1a4 4 0 0 1 0 7.8" /></>,
+  };
+
+  return <svg {...commonProps}>{icons[name] || icons.check}</svg>;
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const metrics = [
+  { value: "5+", label: "Years in CX Operations" },
+  { value: "12pt", label: "NPS Improvement" },
+  { value: "10%", label: "CSAT Improvement" },
+  { value: "20%", label: "Repeat Escalations Reduced" },
+];
+
+const skills = [
+  "Project Management",
+  "Customer Experience Operations",
+  "Escalation Management",
+  "Root Cause Analysis",
+  "SQL",
+  "Tableau",
+  "Metabase",
+  "Process Improvement",
+  "Stakeholder Management",
+  "SLA Management",
+  "Workflow Automation",
+  "Incident Management",
+];
+
+const experience = [
+  {
+    role: "Customer Success Manager — Escalations & Operations",
+    company: "Plum",
+    period: "Mar 2023 — Jan 2025",
+    points: [
+      "Owned operational performance for high-stakes enterprise accounts, including queue health, backlog management, EMRT, and SLA achievement.",
+      "Led cross-functional escalation resolution with Legal, Finance, and Product teams to protect customer trust and brand reputation.",
+      "Used SQL, Tableau, and Metabase to build performance reviews, identify bottlenecks, and recommend workflow automation opportunities.",
+      "Coached team members on sensitive customer escalations, improving NPS by 12 points and CSAT by 10%.",
+    ],
+  },
+  {
+    role: "Customer Service Specialist — Incident Support L2",
+    company: "Plum",
+    period: "May 2022 — Mar 2023",
+    points: [
+      "Managed 50+ complex accounts and sensitive customer escalations with a structured investigative approach.",
+      "Reduced average resolution time by 15% and repeat escalation tickets by 20% through root cause analysis and process refinement.",
+      "Collaborated with engineering and support teams to test process improvements in an experiment-and-measure operating model.",
+    ],
+  },
+  {
+    role: "Account Executive & Operations Lead",
+    company: "ClearTax",
+    period: "May 2020 — May 2022",
+    points: [
+      "Managed operational backlogs, stakeholder expectations, and high-value B2B client relationships in a fast-paced environment.",
+      "Used CRM data and performance metrics to achieve 95% forecast accuracy and identify engagement gaps.",
+      "Navigated ambiguity with clear communication, commercial judgment, and structured follow-through.",
+    ],
+  },
+];
+
+const strengths = [
+  {
+    iconName: "target",
+    title: "Business Ownership",
+    text: "Comfortable owning operational areas end-to-end, balancing daily execution with longer-term improvement initiatives.",
+  },
+  {
+    iconName: "barChart",
+    title: "Analytical Problem Solving",
+    text: "Turns dashboards, customer signals, and process data into practical recommendations that improve key CX metrics.",
+  },
+  {
+    iconName: "users",
+    title: "Stakeholder Leadership",
+    text: "Experienced in aligning Product, Legal, Finance, Engineering, and Support teams during complex customer-impacting issues.",
+  },
+  {
+    iconName: "shield",
+    title: "Escalation & Risk Management",
+    text: "Calm under pressure, with a strong track record managing high-risk incidents, executive escalations, and SLA-sensitive workflows.",
+  },
+];
+
+function runPortfolioDataTests() {
+  // Lightweight smoke tests for the portfolio data used by the UI.
+  // These help catch accidental regressions while keeping the component simple.
+  console.assert(metrics.length === 4, "Expected exactly four profile metrics.");
+  console.assert(skills.includes("SQL"), "Expected SQL to be included in skills.");
+  console.assert(skills.includes("Tableau"), "Expected Tableau to be included in skills.");
+  console.assert(experience.length === 3, "Expected three experience entries.");
+  console.assert(experience.every((job) => job.role && job.company && job.points.length > 0), "Each job should include role, company, and at least one bullet.");
+  console.assert(strengths.every((item) => item.iconName && item.title && item.text), "Each strength should include an icon, title, and description.");
+}
+
+if (typeof window !== "undefined") {
+  runPortfolioDataTests();
+}
+
+export default function KashishPortfolio() {
+  return (
+    <main className="min-h-screen bg-slate-950 text-white">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.28),transparent_35%),radial-gradient(circle_at_top_right,rgba(168,85,247,0.22),transparent_30%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 py-8 lg:px-8">
+          <nav className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-slate-950 font-bold">
+                KD
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Kashish Doshi</p>
+                <p className="text-xs text-slate-300">CX Operations · Project Management</p>
+              </div>
+            </div>
+            <div className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
+              <a href="#experience" className="hover:text-white">Experience</a>
+              <a href="#skills" className="hover:text-white">Skills</a>
+              <a href="#contact" className="hover:text-white">Contact</a>
+            </div>
+          </nav>
+
+          <div className="grid gap-12 py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-28">
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.7 }}>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-300/20 bg-blue-400/10 px-4 py-2 text-sm text-blue-100">
+                <Icon name="sparkles" className="h-4 w-4" />
+                Customer Experience Operations Leader
+              </div>
+              <h1 className="max-w-4xl text-5xl font-bold tracking-tight md:text-7xl">
+                Building better customer experiences through data, process, and ownership.
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                Kashish Doshi is a results-driven operations and escalation management professional with 5+ years of experience improving customer support workflows, managing high-risk incidents, and leading cross-functional process improvements in fast-moving environments.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button asChild className="rounded-2xl px-6 py-6 text-base">
+                  <a href="#contact">
+                    Get in touch <Icon name="arrowRight" className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="rounded-2xl border-white/20 bg-white/5 px-6 py-6 text-base text-white hover:bg-white/10">
+                  <a href="#experience">View experience</a>
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}>
+              <Card className="rounded-3xl border-white/10 bg-white/10 shadow-2xl backdrop-blur">
+                <CardContent className="p-6">
+                  <div className="rounded-3xl bg-slate-900/80 p-6">
+                    <p className="text-sm uppercase tracking-[0.3em] text-blue-200">Profile snapshot</p>
+                    <div className="mt-8 grid grid-cols-2 gap-4">
+                      {metrics.map((metric) => (
+                        <div key={metric.label} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                          <p className="text-3xl font-bold">{metric.value}</p>
+                          <p className="mt-1 text-sm text-slate-300">{metric.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-6 space-y-3 text-sm text-slate-300">
+                      <p className="flex items-center gap-3"><Icon name="mapPin" className="h-4 w-4 text-blue-200" /> Bangkok, Thailand</p>
+                      <p className="flex items-center gap-3"><Icon name="globe" className="h-4 w-4 text-blue-200" /> Multicultural, high-velocity CX environments</p>
+                      <p className="flex items-center gap-3"><Icon name="database" className="h-4 w-4 text-blue-200" /> SQL · Tableau · Metabase · Excel</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {strengths.map((item) => (
+            <Card key={item.title} className="rounded-3xl border-white/10 bg-white/[0.04] text-white">
+              <CardContent className="p-6">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-400/15 text-blue-200">
+                  <Icon name={item.iconName} className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-300">{item.text}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="experience" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="mb-10 max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-200">Experience</p>
+          <h2 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">Operations leadership across customer support, incidents, and process improvement.</h2>
+        </div>
+        <div className="space-y-5">
+          {experience.map((job) => (
+            <Card key={job.role} className="rounded-3xl border-white/10 bg-white/[0.04] text-white">
+              <CardContent className="grid gap-6 p-6 md:grid-cols-[0.9fr_1.4fr] md:p-8">
+                <div>
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">
+                    <Icon name="briefcase" className="h-3.5 w-3.5" /> {job.period}
+                  </div>
+                  <h3 className="text-2xl font-bold">{job.role}</h3>
+                  <p className="mt-2 text-blue-200">{job.company}</p>
+                </div>
+                <ul className="space-y-4">
+                  {job.points.map((point) => (
+                    <li key={point} className="flex gap-3 text-sm leading-6 text-slate-300">
+                      <Icon name="check" className="mt-1 h-4 w-4 flex-none text-blue-200" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="skills" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 md:p-10">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-200">Core skills</p>
+              <h2 className="mt-3 text-4xl font-bold tracking-tight">Built for CX transformation roles.</h2>
+              <p className="mt-5 text-slate-300">
+                A practical mix of project ownership, data analysis, stakeholder management, and frontline operational understanding.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {skills.map((skill) => (
+                <span key={skill} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <Card className="overflow-hidden rounded-3xl border-white/10 bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-white">
+          <CardContent className="p-8 md:p-12">
+            <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-center">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-100">Ideal roles</p>
+                <h2 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">Customer Experience Project Manager · Operations Manager · Escalation Strategy Lead</h2>
+                <p className="mt-5 max-w-3xl text-slate-200">
+                  Kashish is well-positioned for roles that require ownership of CX business areas, structured problem solving, stakeholder alignment, operational analytics, and continuous improvement across customer support teams.
+                </p>
+              </div>
+              <div className="rounded-3xl bg-slate-950/60 p-6">
+                <h3 className="text-xl font-semibold">Working style</h3>
+                <ul className="mt-5 space-y-4 text-sm text-slate-300">
+                  <li className="flex gap-3"><Icon name="check" className="h-4 w-4 flex-none text-blue-200" /> Structured, analytical, and data-driven</li>
+                  <li className="flex gap-3"><Icon name="check" className="h-4 w-4 flex-none text-blue-200" /> Calm during ambiguity and high-pressure incidents</li>
+                  <li className="flex gap-3"><Icon name="check" className="h-4 w-4 flex-none text-blue-200" /> Collaborative across seniority levels and functions</li>
+                  <li className="flex gap-3"><Icon name="check" className="h-4 w-4 flex-none text-blue-200" /> Focused on measurable customer experience outcomes</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section id="contact" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center md:p-12">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-200">Contact</p>
+          <h2 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">Let’s connect.</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-slate-300">
+            Available for customer experience operations, project management, escalation strategy, and process improvement opportunities.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 text-sm text-slate-200 sm:flex-row sm:flex-wrap">
+            <a className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 hover:bg-white/15" href="tel:0636528952">
+              <Icon name="phone" className="h-4 w-4" /> 0636528952
+            </a>
+            <a className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 hover:bg-white/15" href="mailto:doshikashish21@gmail.com">
+              <Icon name="mail" className="h-4 w-4" /> doshikashish21@gmail.com
+            </a>
+            <a className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 hover:bg-white/15" href="#" aria-label="Kashish Doshi LinkedIn profile">
+              <Icon name="linkedin" className="h-4 w-4" /> LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
